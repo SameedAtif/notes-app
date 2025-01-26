@@ -20,7 +20,6 @@ import { capitalizeFirstLetter } from "./lib/utils"
 
 
 function isActivePage(page: string, item: string): boolean {
-  console.log(capitalizeFirstLetter(page), item, page, (capitalizeFirstLetter(page) === item))
   return (capitalizeFirstLetter(page) === item)
 }
 
@@ -42,7 +41,6 @@ export function Sidebar() {
     { name: "Skills", icon: Hammer },
   ]
 
-  console.log(navigation)
   return (
     <div className="w-60 border-r flex flex-col sticky top-0 h-screen">
       <div className="p-6">
@@ -59,7 +57,7 @@ export function Sidebar() {
               <span className="text-xs text-gray-500 px-3 mt-2 block">{item.name}</span>
             </div>
           ) : (
-            <Link to={`/${item.name}`}>
+            <Link to={`/${item.name.toLowerCase()}`}>
               <Button
                 key={item.name}
                 variant="ghost"

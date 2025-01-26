@@ -1,30 +1,20 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Search, Plus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "./ui/badge"
+
+import { RootState } from "@/store";
+import { openNewNoteForm } from "@/slices/notesSlice";
 
 import { capitalizeFirstLetter } from "../lib/utils"
+import NoteCard from "./note-card";
 
-interface Note {
-    id: string
-    title: string
-    content: string
-    tags?: string[]
-    image?: string
-    description?:string
-}
-
-interface NoteListProps {
-  selectedNote: string | null,
-  setSelectedNote: React.Dispatch<React.SetStateAction<string | null>>,
-  notes: Note[]
-}
-
-export default function NoteList({selectedNote, setSelectedNote, notes}:NoteListProps){
+export default function NoteList(){
+  const dispatch = useDispatch();
   const { page } = useParams();
+  const { notes } = useSelector((state: RootState) => state.notes)
 
   return (
     <div className="flex-1 flex flex-col">
@@ -41,37 +31,16 @@ export default function NoteList({selectedNote, setSelectedNote, notes}:NoteList
               <h1 className="text-2xl font-semibold">{capitalizeFirstLetter(page || 'notes')}</h1>
 
               {notes.map((note) => (
-                <Card
-                  key={note.id}
-                  className={`cursor-pointer transition-colors ${
-                    selectedNote === note.id ? "bg-orange-50 border-orange-200" : ""
-                  }`}
-                  onClick={() => setSelectedNote(note.id)}
-                >
-                  <CardHeader>
-                    <CardTitle>{note.title}</CardTitle>
-                    {note.description && <CardDescription>{note.description}</CardDescription>}
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-500">{note.content}</p>
-                    {note.tags && (
-                      <div className="flex gap-2 mt-2">
-                        {note.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                <NoteCard
+                  note={note}
+                />
               ))}
             </div>
           </main>
 
         </div>
         <div className="fixed bottom-6 right-6 flex gap-2">
-          <Button size="icon" className="rounded-full shadow-lg">
+          <Button size="icon" className="rounded-full shadow-lg" onClick={() => dispatch(openNewNoteForm())}>
             <Plus className="h-4 w-4" />
           </Button>
           <Button size="icon" variant="outline" className="rounded-full shadow-lg">
