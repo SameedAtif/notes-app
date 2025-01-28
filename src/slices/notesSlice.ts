@@ -17,12 +17,60 @@ const initialState: NotesState = {
       content: "Brand Fleur - Instant Dry Yeast, Extra-virgin Olive Oil 5 banana muffins - 4 garlic cloves",
       description: "San Francisco, CA",
       category: 'notes',
+      editorValue: {
+            '9d98408d-b990-4ffc-a1d7-387084291b00': {
+              id: '9d98408d-b990-4ffc-a1d7-387084291b00',
+              value: [
+                {
+                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  type: 'heading-one',
+                  children: [
+                    {
+                      text: "Grocery list / Stores",
+                    },
+                  ],
+                  props: {
+                    nodeType: 'block',
+                  },
+                },
+              ],
+              type: 'HeadingOne',
+              meta: {
+                order: 0,
+                depth: 0,
+              },
+            }
+          }
     },
     {
       id: "2",
       title: "Books to read 📚",
       content: "Coming to the books we've been meaning to read all these years and should probably start at some point.",
       category: 'notes',
+      editorValue: {
+            '9d98408d-b990-4ffc-a1d7-387084291b01': {
+              id: '9d98408d-b990-4ffc-a1d7-387084291b01',
+              value: [
+                {
+                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  type: 'heading-one',
+                  children: [
+                    {
+                      text: "Books to read 📚",
+                    },
+                  ],
+                  props: {
+                    nodeType: 'block',
+                  },
+                },
+              ],
+              type: 'HeadingOne',
+              meta: {
+                order: 0,
+                depth: 0,
+              },
+            }
+          }
     },
     {
       id: "3",
@@ -32,6 +80,30 @@ const initialState: NotesState = {
       tags: ["#ideas", "#to-dos", "#morning"],
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MQNCo5QousWGZ7ivbyjYb1iXFm8MUM.png",
       category: 'notes',
+      editorValue: {
+            '9d98408d-b990-4ffc-a1d7-387084291b02': {
+              id: '9d98408d-b990-4ffc-a1d7-387084291b02',
+              value: [
+                {
+                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  type: 'heading-one',
+                  children: [
+                    {
+                      text: "Write down your ideas 💡",
+                    },
+                  ],
+                  props: {
+                    nodeType: 'block',
+                  },
+                },
+              ],
+              type: 'HeadingOne',
+              meta: {
+                order: 0,
+                depth: 0,
+              },
+            }
+          }
     },
     {
       id: "4",
@@ -41,6 +113,30 @@ const initialState: NotesState = {
       tags: ["#ideas", "#to-dos", "#morning"],
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MQNCo5QousWGZ7ivbyjYb1iXFm8MUM.png",
       category: 'development',
+      editorValue: {
+            '9d98408d-b990-4ffc-a1d7-387084291b03': {
+              id: '9d98408d-b990-4ffc-a1d7-387084291b03',
+              value: [
+                {
+                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  type: 'heading-one',
+                  children: [
+                    {
+                      text: "Entreprenuership guide 💡",
+                    },
+                  ],
+                  props: {
+                    nodeType: 'block',
+                  },
+                },
+              ],
+              type: 'HeadingOne',
+              meta: {
+                order: 0,
+                depth: 0,
+              },
+            }
+          }
     },
   ],
 }

@@ -1,5 +1,4 @@
-import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/store'
 import NotesForm from "@/components/notes-form"
@@ -8,37 +7,9 @@ import { Pin, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 
-import { add } from '@/slices/notesSlice'
-import { useParams } from 'react-router'
-
 export function EditorContainer() {
-  const { page } = useParams();
-  const dispatch = useDispatch();
-  const { selectedNote, notes, isNewNoteFormOpen } = useSelector((state: RootState) => state.notes)
-
-  const buildNewNote = useCallback(() =>{
-    const newIndex = parseInt(notes[notes.length - 1].id) + 1;
-
-    return {
-      id: newIndex.toString(),
-      description: "",
-      title: "",
-      content: "",
-      category: page?.toLowerCase() || 'notes'
-    }
-  }, [notes, page])
-
-  const toggleNotesForm = useCallback(()=> {
-
-    if (isNewNoteFormOpen && selectedNote?.id !== notes[0].id) {
-      const note = buildNewNote()
-      dispatch(add(note))
-      return <NotesForm />
-    }
-    return <NotesForm note={notes.find((note) => note.id === selectedNote?.id)} />
-  }, [buildNewNote, dispatch, isNewNoteFormOpen, notes, selectedNote?.id])
-
-
+  const { selectedNote } = useSelector((state: RootState) => state.notes)
+  // console.log('Tracking re-render', selectedNote);
   return (
     <div className="w-1/2 border-l bg-white overflow-y-auto px-12">
         <header className="pt-3 bg-white flex items-center justify-between">
@@ -69,7 +40,12 @@ export function EditorContainer() {
             </div>
           </div>
         </header>
-        {toggleNotesForm()}
+        {selectedNote ?
+          <NotesForm note={selectedNote}/> :
+          <div className={`p-12 flex items-center justify-center`}>
+            <p className="text-gray-500">Select a note to view details</p>
+          </div>
+        }
       </div>
   )
 }

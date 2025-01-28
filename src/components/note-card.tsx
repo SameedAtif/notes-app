@@ -4,7 +4,7 @@ import { Pin, Trash2 } from "lucide-react"
 import { RootState } from "@/store"
 import { Note } from "@/interfaces/noteInterface"
 
-import { remove, setSelectedNote } from "@/slices/notesSlice"
+import { remove, setSelectedNote, closeNewNoteForm } from "@/slices/notesSlice"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -15,8 +15,15 @@ interface NoteCardProps {
 }
 
 export default function NoteCard({ note }:NoteCardProps ) {
-  const { selectedNote } = useSelector((state: RootState) => state.notes)
+  const { selectedNote, isNewNoteFormOpen } = useSelector((state: RootState) => state.notes)
   const dispatch = useDispatch()
+  const handleNoteClick = () => {
+    dispatch(setSelectedNote(note))
+    // console.log("Note changed", note.title);
+    if(isNewNoteFormOpen) {
+      dispatch(closeNewNoteForm())
+    }
+  }
 
   return (
     <Card
@@ -24,7 +31,7 @@ export default function NoteCard({ note }:NoteCardProps ) {
       className={`cursor-pointer transition-colors ${
         selectedNote === note ? "bg-orange-50 border-orange-200" : ""
       }`}
-      onClick={() => dispatch(setSelectedNote(note))}
+      onClick={handleNoteClick}
     >
       <CardHeader>
         <CardTitle className="flex items-center justify-between">

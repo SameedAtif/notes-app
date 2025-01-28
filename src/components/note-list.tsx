@@ -6,15 +6,33 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { RootState } from "@/store";
-import { openNewNoteForm } from "@/slices/notesSlice";
+import { add } from "@/slices/notesSlice";
 
 import { capitalizeFirstLetter } from "../lib/utils"
 import NoteCard from "./note-card";
+import { useCallback } from "react";
 
 export default function NoteList(){
   const dispatch = useDispatch();
   const { page } = useParams();
   const { notes } = useSelector((state: RootState) => state.notes)
+
+  const buildNewNote = useCallback(() =>{
+    const newIndex = parseInt(notes[notes.length - 1].id) + 1;
+
+    return {
+      id: newIndex.toString(),
+      description: "",
+      title: "",
+      content: "",
+      category: page?.toLowerCase() || 'notes'
+    }
+  }, [notes, page])
+
+  const createNewNote = () => {
+    const newNote = buildNewNote();
+    dispatch(add(newNote));
+  }
 
   return (
     <div className="flex-1 flex flex-col">
@@ -40,7 +58,7 @@ export default function NoteList(){
 
         </div>
         <div className="fixed bottom-6 right-6 flex gap-2">
-          <Button size="icon" className="rounded-full shadow-lg" onClick={() => dispatch(openNewNoteForm())}>
+          <Button size="icon" className="rounded-full shadow-lg" onClick={createNewNote}>
             <Plus className="h-4 w-4" />
           </Button>
           <Button size="icon" variant="outline" className="rounded-full shadow-lg">

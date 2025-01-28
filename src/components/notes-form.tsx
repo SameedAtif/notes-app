@@ -22,13 +22,36 @@ import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-lis
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar';
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool';
 import { uploadToCloudinary } from '@/lib/cloudinary';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { extractFirstText } from '@/lib/utils';
 import { Note } from '@/interfaces/noteInterface';
 import { useDispatch } from 'react-redux';
 import { update } from '@/slices/notesSlice';
 
-
+const defaultEditorState = {
+  '9d98408d-b990-4ffc-a1d7-387084291b00': {
+    id: '9d98408d-b990-4ffc-a1d7-387084291b00',
+    value: [
+      {
+        id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+        type: 'heading-one',
+        children: [
+          {
+            text: "",
+          },
+        ],
+        props: {
+          nodeType: 'block',
+        },
+      },
+    ],
+    type: 'HeadingOne',
+    meta: {
+      order: 0,
+      depth: 0,
+    },
+  }
+}
 const plugins = [
   Paragraph,
   Table,
@@ -117,48 +140,34 @@ const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 function WithBaseFullSetup({ note }:{note?: Note} ) {
   const dispatch = useDispatch();
   const [value, setValue] = useState<YooptaContentValue>(
-    {
-      '9d98408d-b990-4ffc-a1d7-387084291b00': {
-        id: '9d98408d-b990-4ffc-a1d7-387084291b00',
-        value: [
-          {
-            id: '0508777e-52a4-4168-87a0-bc7661e57aab',
-            type: 'heading-one',
-            children: [
-              {
-                text: '',
-              },
-            ],
-            props: {
-              nodeType: 'block',
-            },
-          },
-        ],
-        type: 'HeadingOne',
-        meta: {
-          order: 0,
-          depth: 0,
-        },
-      }
-    }
+    note?.editorValue || defaultEditorState
   );
 
-  const editor = useMemo(() => createYooptaEditor(), []);
-  const selectionRef = useRef(null);
-
-  const onChange = (newValue: YooptaContentValue) => {
+  const onChange = useCallback((newValue: YooptaContentValue) => {
     console.log('newValue', newValue);
     console.log('First Text', extractFirstText(newValue))
-    if(note) {
-      note.title = extractFirstText(newValue);
-      dispatch(update(note))
-    }
+    // if(note) {
+    //   note.title = extractFirstText(newValue);
+    //   dispatch(update(note))
+    // }
 
     // console.log('html', html.serialize(editor, newValue));
     // console.log('plainText', plainText.serialize(editor, newValue))
     // console.log('markdown', markdown.serialize(editor, newValue))
     setValue(newValue);
-  };
+  }, []);
+
+  useEffect(() => {
+    if(note) {
+      const newValue = note?.editorValue;
+      console.log('new note assigned', newValue);
+      onChange(newValue || defaultEditorState);
+      console.log('new note assigned', value);
+    }
+  }, [note, onChange, value])
+
+  const editor = useMemo(() => createYooptaEditor(), []);
+  const selectionRef = useRef(null);
 
   return (
     <div

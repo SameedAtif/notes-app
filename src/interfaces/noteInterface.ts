@@ -1,3 +1,5 @@
+import { YooptaContentValue } from "@yoopta/editor"
+
 export interface Note {
   id: string
   title: string
@@ -5,5 +7,6 @@ export interface Note {
   tags?: string[]
   image?: string
   description?:string
-  category?: string
+  category?: string,
+  editorValue?: YooptaContentValue
 }
