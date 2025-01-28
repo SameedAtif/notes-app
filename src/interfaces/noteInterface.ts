@@ -4,6 +4,7 @@ export interface Note {
   content: string
   tags?: string[]
   image?: string
-  description?:string
+  description?: string
   category?: string
 }
+

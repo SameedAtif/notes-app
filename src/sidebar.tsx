@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { Link, useParams } from "react-router"
 import {
   LayoutTemplate,
   Download,
@@ -17,14 +17,14 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { capitalizeFirstLetter } from "./lib/utils"
-
+import  NoteList  from "./components/note-list"
 
 function isActivePage(page: string, item: string): boolean {
-  return (capitalizeFirstLetter(page) === item)
+  return capitalizeFirstLetter(page) === item
 }
 
 export function Sidebar() {
-  const { page } = useParams();
+  const { page } = useParams()
 
   const navigation = [
     { name: "Templates", icon: LayoutTemplate },
@@ -61,7 +61,10 @@ export function Sidebar() {
               <Button
                 key={item.name}
                 variant="ghost"
-                className={cn("w-full justify-start gap-2 mb-1", isActivePage(page || "tasks", item.name) && "bg-gray-100")}
+                className={cn(
+                  "w-full justify-start gap-2 mb-1",
+                  isActivePage(page || "tasks", item.name) && "bg-gray-100",
+                )}
               >
                 {item.icon && <item.icon className="w-4 h-4" />}
                 {item.name}
@@ -70,6 +73,7 @@ export function Sidebar() {
           ),
         )}
       </nav>
+      <NoteList />
       <div className="p-3 mt-auto">
         <Button className="w-full gap-2">
           <Plus className="w-4 h-4" />

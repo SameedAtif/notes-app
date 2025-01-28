@@ -1,8 +1,7 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Pin, Trash2 } from "lucide-react"
 
-import { RootState } from "@/store"
-import { Note } from "@/interfaces/noteInterface"
+import type { Note } from "@/interfaces/noteInterface"
 
 import { remove, setSelectedNote } from "@/slices/notesSlice"
 
@@ -12,19 +11,29 @@ import { Badge } from "./ui/badge"
 
 interface NoteCardProps {
   note: Note
+  isSelected?: boolean
+  onClick?: () => void
 }
 
-export default function NoteCard({ note }:NoteCardProps ) {
-  const { selectedNote } = useSelector((state: RootState) => state.notes)
+export default function NoteCard({ note, isSelected, onClick }: NoteCardProps) {
   const dispatch = useDispatch()
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onClick?.()
+    dispatch(setSelectedNote(note))
+  }
+
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    dispatch(remove(note.id))
+  }
 
   return (
     <Card
       key={note.id}
-      className={`cursor-pointer transition-colors ${
-        selectedNote === note ? "bg-orange-50 border-orange-200" : ""
-      }`}
-      onClick={() => dispatch(setSelectedNote(note))}
+      className={`cursor-pointer transition-colors ${isSelected ? "bg-orange-50 border-orange-200" : ""}`}
+      onClick={handleClick}
     >
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
@@ -33,7 +42,7 @@ export default function NoteCard({ note }:NoteCardProps ) {
             <Button variant="ghost" size="icon">
               <Pin className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => dispatch(remove(note.id))}>
+            <Button variant="ghost" size="icon" onClick={handleRemove}>
               <Trash2 className="h-4 w-4" />
             </Button>
           </div>
@@ -53,5 +62,6 @@ export default function NoteCard({ note }:NoteCardProps ) {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }
+
