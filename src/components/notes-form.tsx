@@ -147,9 +147,8 @@ function WithBaseFullSetup({ note }:{note?: Note} ) {
 
   const onChange = useCallback((newValue: YooptaContentValue) => {
     if(note) {
-      note.title = extractFirstText(newValue);
-      note.editorValue = newValue;
-      dispatch(update(note))
+      const updatedNote = {...note, ...{ title: extractFirstText(newValue), editorValue: newValue }}
+      dispatch(update(updatedNote))
     }
     setValue(newValue);
   }, [dispatch, note]);

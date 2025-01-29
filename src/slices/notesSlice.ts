@@ -159,7 +159,7 @@ export const notesSlice = createSlice({
       state.notes.map((note: Note) => {
         if (note.id !== action.payload.id) return note;
 
-        return action.payload;
+        return {...note, ...action.payload};
       })
     },
     setSelectedNote: (state, action: PayloadAction<Note>) => {
