@@ -18,11 +18,11 @@ const initialState: NotesState = {
       description: "San Francisco, CA",
       category: 'notes',
       editorValue: {
-            '9d98408d-b990-4ffc-a1d7-387084291b00': {
-              id: '9d98408d-b990-4ffc-a1d7-387084291b00',
+            'first-string': {
+              id: 'first-string',
               value: [
                 {
-                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  id: 'hello-world-1',
                   type: 'heading-one',
                   children: [
                     {
@@ -48,11 +48,11 @@ const initialState: NotesState = {
       content: "Coming to the books we've been meaning to read all these years and should probably start at some point.",
       category: 'notes',
       editorValue: {
-            '9d98408d-b990-4ffc-a1d7-387084291b01': {
-              id: '9d98408d-b990-4ffc-a1d7-387084291b01',
+            'second-string': {
+              id: 'second-string',
               value: [
                 {
-                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  id: 'hello-world-2',
                   type: 'heading-one',
                   children: [
                     {
@@ -81,11 +81,11 @@ const initialState: NotesState = {
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MQNCo5QousWGZ7ivbyjYb1iXFm8MUM.png",
       category: 'notes',
       editorValue: {
-            '9d98408d-b990-4ffc-a1d7-387084291b02': {
-              id: '9d98408d-b990-4ffc-a1d7-387084291b02',
+            'third-string': {
+              id: 'third-string',
               value: [
                 {
-                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  id: 'hello-world-3',
                   type: 'heading-one',
                   children: [
                     {
@@ -114,11 +114,11 @@ const initialState: NotesState = {
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MQNCo5QousWGZ7ivbyjYb1iXFm8MUM.png",
       category: 'development',
       editorValue: {
-            '9d98408d-b990-4ffc-a1d7-387084291b03': {
-              id: '9d98408d-b990-4ffc-a1d7-387084291b03',
+            'fourth-string': {
+              id: 'fourth-string',
               value: [
                 {
-                  id: '0508777e-52a4-4168-87a0-bc7661e57aab',
+                  id: 'hello-world-4',
                   type: 'heading-one',
                   children: [
                     {

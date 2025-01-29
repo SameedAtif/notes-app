@@ -138,36 +138,28 @@ const TOOLS = {
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 
 function WithBaseFullSetup({ note }:{note?: Note} ) {
+  const editor = useMemo(() => createYooptaEditor(), []);
+  const selectionRef = useRef(null);
   const dispatch = useDispatch();
   const [value, setValue] = useState<YooptaContentValue>(
     note?.editorValue || defaultEditorState
   );
 
   const onChange = useCallback((newValue: YooptaContentValue) => {
-    console.log('newValue', newValue);
-    console.log('First Text', extractFirstText(newValue))
-    // if(note) {
-    //   note.title = extractFirstText(newValue);
-    //   dispatch(update(note))
-    // }
-
-    // console.log('html', html.serialize(editor, newValue));
-    // console.log('plainText', plainText.serialize(editor, newValue))
-    // console.log('markdown', markdown.serialize(editor, newValue))
+    if(note) {
+      note.title = extractFirstText(newValue);
+      note.editorValue = newValue;
+      dispatch(update(note))
+    }
     setValue(newValue);
-  }, []);
+  }, [dispatch, note]);
 
   useEffect(() => {
     if(note) {
       const newValue = note?.editorValue;
-      console.log('new note assigned', newValue);
-      onChange(newValue || defaultEditorState);
-      console.log('new note assigned', value);
+      editor.setEditorValue(newValue || null);
     }
-  }, [note, onChange, value])
-
-  const editor = useMemo(() => createYooptaEditor(), []);
-  const selectionRef = useRef(null);
+  }, [editor, note, value])
 
   return (
     <div
