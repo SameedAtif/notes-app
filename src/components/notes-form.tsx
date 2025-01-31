@@ -137,6 +137,20 @@ const TOOLS = {
 
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 
+function getFallbackUUID() {
+  const S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4();
+}
+
+const generateId = () => {
+  if (typeof window === 'undefined') return getFallbackUUID();
+  if (typeof window.crypto?.randomUUID !== 'function') return getFallbackUUID();
+
+  return window.crypto?.randomUUID();
+};
+
 function WithBaseFullSetup({ note }:{note?: Note} ) {
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
@@ -144,6 +158,7 @@ function WithBaseFullSetup({ note }:{note?: Note} ) {
   const [value, setValue] = useState<YooptaContentValue>(
     note?.editorValue || defaultEditorState
   );
+  const [editorId, setEditorId] = useState<string>(generateId());
 
   const onChange = useCallback((newValue: YooptaContentValue) => {
     if(note) {
@@ -154,9 +169,9 @@ function WithBaseFullSetup({ note }:{note?: Note} ) {
   }, [dispatch, note]);
 
   useEffect(() => {
-    if(note) {
-      const newValue = note?.editorValue;
-      editor.setEditorValue(newValue || null);
+    if(note?.editorValue) {
+      setEditorId(generateId());
+      setValue(note?.editorValue);
     }
   }, [editor, note, value])
 
@@ -166,6 +181,7 @@ function WithBaseFullSetup({ note }:{note?: Note} ) {
       ref={selectionRef}
     >
       <YooptaEditor
+        key={editorId}
         editor={editor}
         plugins={plugins}
         tools={TOOLS}
