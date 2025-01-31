@@ -1,5 +1,6 @@
 import YooptaEditor, {
   createYooptaEditor,
+  generateId,
   YooptaContentValue,
 } from '@yoopta/editor';
 
@@ -24,11 +25,11 @@ import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool';
 import { uploadToCloudinary } from '@/lib/cloudinary';
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { extractFirstText } from '@/lib/utils';
-import { Note } from '@/interfaces/noteInterface';
+import { Note } from '@/interfaces/note.types';
 import { useDispatch } from 'react-redux';
-import { update } from '@/slices/notesSlice';
+import { update } from '@/slices/notes/notesSlice';
 
-const defaultEditorState = {
+const DEFAULT_EDITOR_STATE = {
   '9d98408d-b990-4ffc-a1d7-387084291b00': {
     id: '9d98408d-b990-4ffc-a1d7-387084291b00',
     value: [
@@ -52,6 +53,7 @@ const defaultEditorState = {
     },
   }
 }
+
 const plugins = [
   Paragraph,
   Table,
@@ -137,32 +139,18 @@ const TOOLS = {
 
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 
-function getFallbackUUID() {
-  const S4 = function () {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  };
-  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4();
-}
-
-const generateId = () => {
-  if (typeof window === 'undefined') return getFallbackUUID();
-  if (typeof window.crypto?.randomUUID !== 'function') return getFallbackUUID();
-
-  return window.crypto?.randomUUID();
-};
-
-function WithBaseFullSetup({ note }:{note?: Note} ) {
+export function NotesForm({ note }:{note?: Note} ) {
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
   const dispatch = useDispatch();
   const [value, setValue] = useState<YooptaContentValue>(
-    note?.editorValue || defaultEditorState
+    note?.editorValue || DEFAULT_EDITOR_STATE
   );
   const [editorId, setEditorId] = useState<string>(generateId());
 
   const onChange = useCallback((newValue: YooptaContentValue) => {
     if(note) {
-      const updatedNote = {...note, ...{ title: extractFirstText(newValue), editorValue: newValue }}
+      const updatedNote = {...note, ...{ title: extractFirstText(newValue) || "", editorValue: newValue }}
       dispatch(update(updatedNote))
     }
     setValue(newValue);
@@ -194,5 +182,3 @@ function WithBaseFullSetup({ note }:{note?: Note} ) {
     </div>
   );
 }
-
-export default WithBaseFullSetup;

@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { RootState } from "@/store";
-import { add } from "@/slices/notesSlice";
+import { add } from "@/slices/notes/notesSlice";
 
-import { capitalizeFirstLetter } from "../lib/utils"
-import NoteCard from "./note-card";
+import { capitalizeFirstLetter } from "../../lib/utils"
+import { NoteCard } from "./noteCard";
 import { useCallback } from "react";
 
-export default function NoteList(){
+export function NoteList(){
   const dispatch = useDispatch();
   const { page } = useParams();
   const { notes } = useSelector((state: RootState) => state.notes)

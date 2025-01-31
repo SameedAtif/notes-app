@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/store'
-import NotesForm from "@/components/notes-form"
+import { NotesForm } from "@/components/Notes/notesForm"
 
 import { Pin, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"

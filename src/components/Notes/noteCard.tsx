@@ -2,19 +2,19 @@ import { useDispatch, useSelector } from "react-redux"
 import { Pin, Trash2 } from "lucide-react"
 
 import { RootState } from "@/store"
-import { Note } from "@/interfaces/noteInterface"
+import { Note } from "@/interfaces/note.types"
 
-import { remove, setSelectedNote, closeNewNoteForm } from "@/slices/notesSlice"
+import { remove, setSelectedNote, closeNewNoteForm } from "@/slices/notes/notesSlice"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "./ui/badge"
+import { Badge } from "../ui/badge"
 
 interface NoteCardProps {
   note: Note
 }
 
-export default function NoteCard({ note }:NoteCardProps ) {
+export function NoteCard({ note }:NoteCardProps ) {
   const { selectedNote, isNewNoteFormOpen } = useSelector((state: RootState) => state.notes)
   const dispatch = useDispatch()
   const handleNoteClick = () => {

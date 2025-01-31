@@ -1,7 +1,7 @@
 
 import { Sidebar } from "./sidebar"
-import NoteList from "./components/note-list"
-import { EditorContainer } from "./components/editor-container"
+import { NoteList } from "./components/Notes/noteList"
+import { EditorContainer } from "./components/Notes/editorContainer"
 
 export default function App() {
   return (

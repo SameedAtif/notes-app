@@ -9,7 +9,7 @@ export function capitalizeFirstLetter(val: string) {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
-export function extractFirstText(data: {text?: string}): string {
+export function extractFirstText(data: {text?: string} | string): string | null {
   if (typeof data === 'object' && data !== null) {
       if (data.text) return data.text;
 
